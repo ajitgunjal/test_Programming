@@ -1,0 +1,32 @@
+
+name: Update Number
+
+on:
+  schedule:
+    # Runs every day at 06:55 AM UTC (5:30 PM IST)
+    - cron: '30 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  update_job:
+    runs-on: ubuntu-latest
+    permissions:      # <-- ADD THIS BLOCK
+      contents: write # <-- TO GRANT WRITE PERMISSION
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Update the number
+        run: |
+          current_number=$(cat number.txt)
+          new_number=$((current_number + 1))
+          echo $new_number > number.txt
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'ajitgunjal'
+          git config --global user.email 'ajitgunjal93@gmail.com'
+          git add number.txt
+          git commit -m "Update number to $(cat number.txt)"
+          git push
