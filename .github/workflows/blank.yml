@@ -5,6 +5,7 @@ on:
   schedule:
     # Runs every day at 06:55 PM UTC (5:30 PM IST)
     - cron: '25 13 * * *'
+    - cron: '30 6 * * *'
   workflow_dispatch:
 
 jobs:
